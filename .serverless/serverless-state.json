@@ -1,0 +1,481 @@
+{
+  "service": {
+    "service": "aws-lambda-qrcode-saju",
+    "serviceObject": {
+      "name": "aws-lambda-qrcode-saju"
+    },
+    "provider": {
+      "name": "aws",
+      "runtime": "nodejs12.x",
+      "lambdaHashingVersion": "20201221",
+      "stage": "dev",
+      "region": "us-east-1",
+      "versionFunctions": true,
+      "compiledCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "ServerlessDeploymentBucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+              "BucketEncryption": {
+                "ServerSideEncryptionConfiguration": [
+                  {
+                    "ServerSideEncryptionByDefault": {
+                      "SSEAlgorithm": "AES256"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "ServerlessDeploymentBucketPolicy": {
+            "Type": "AWS::S3::BucketPolicy",
+            "Properties": {
+              "Bucket": {
+                "Ref": "ServerlessDeploymentBucket"
+              },
+              "PolicyDocument": {
+                "Statement": [
+                  {
+                    "Action": "s3:*",
+                    "Effect": "Deny",
+                    "Principal": "*",
+                    "Resource": [
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":s3:::",
+                            {
+                              "Ref": "ServerlessDeploymentBucket"
+                            },
+                            "/*"
+                          ]
+                        ]
+                      },
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":s3:::",
+                            {
+                              "Ref": "ServerlessDeploymentBucket"
+                            }
+                          ]
+                        ]
+                      }
+                    ],
+                    "Condition": {
+                      "Bool": {
+                        "aws:SecureTransport": false
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "HelloLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/aws-lambda-qrcode-saju-dev-hello"
+            }
+          },
+          "IamRoleLambdaExecution": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": [
+                        "lambda.amazonaws.com"
+                      ]
+                    },
+                    "Action": [
+                      "sts:AssumeRole"
+                    ]
+                  }
+                ]
+              },
+              "Policies": [
+                {
+                  "PolicyName": {
+                    "Fn::Join": [
+                      "-",
+                      [
+                        "aws-lambda-qrcode-saju",
+                        "dev",
+                        "lambda"
+                      ]
+                    ]
+                  },
+                  "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:CreateLogStream",
+                          "logs:CreateLogGroup"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/aws-lambda-qrcode-saju-dev*:*"
+                          }
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:PutLogEvents"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/aws-lambda-qrcode-saju-dev*:*:*"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "Path": "/",
+              "RoleName": {
+                "Fn::Join": [
+                  "-",
+                  [
+                    "aws-lambda-qrcode-saju",
+                    "dev",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    "lambdaRole"
+                  ]
+                ]
+              }
+            }
+          },
+          "HelloLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": {
+                  "Ref": "ServerlessDeploymentBucket"
+                },
+                "S3Key": "serverless/aws-lambda-qrcode-saju/dev/1642363514915-2022-01-16T20:05:14.915Z/aws-lambda-qrcode-saju.zip"
+              },
+              "Handler": "handler.hello",
+              "Runtime": "nodejs12.x",
+              "FunctionName": "aws-lambda-qrcode-saju-dev-hello",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "HelloLogGroup"
+            ]
+          },
+          "HelloLambdaVersion9rPUDCJGZJWJD1iS5CJGCAvWHTrmjlgEn52MaKBjY": {
+            "Type": "AWS::Lambda::Version",
+            "DeletionPolicy": "Retain",
+            "Properties": {
+              "FunctionName": {
+                "Ref": "HelloLambdaFunction"
+              },
+              "CodeSha256": "soDloRSj2zEtdw6N9+xWsGnHs8rKTH7MsaL4RJN24q4="
+            }
+          },
+          "HttpApi": {
+            "Type": "AWS::ApiGatewayV2::Api",
+            "Properties": {
+              "Name": "dev-aws-lambda-qrcode-saju",
+              "ProtocolType": "HTTP"
+            }
+          },
+          "HttpApiStage": {
+            "Type": "AWS::ApiGatewayV2::Stage",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "StageName": "$default",
+              "AutoDeploy": true,
+              "DefaultRouteSettings": {
+                "DetailedMetricsEnabled": false
+              }
+            }
+          },
+          "HelloLambdaPermissionHttpApi": {
+            "Type": "AWS::Lambda::Permission",
+            "Properties": {
+              "FunctionName": {
+                "Fn::GetAtt": [
+                  "HelloLambdaFunction",
+                  "Arn"
+                ]
+              },
+              "Action": "lambda:InvokeFunction",
+              "Principal": "apigateway.amazonaws.com",
+              "SourceArn": {
+                "Fn::Join": [
+                  "",
+                  [
+                    "arn:",
+                    {
+                      "Ref": "AWS::Partition"
+                    },
+                    ":execute-api:",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    ":",
+                    {
+                      "Ref": "AWS::AccountId"
+                    },
+                    ":",
+                    {
+                      "Ref": "HttpApi"
+                    },
+                    "/*"
+                  ]
+                ]
+              }
+            }
+          },
+          "HttpApiIntegrationHello": {
+            "Type": "AWS::ApiGatewayV2::Integration",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "IntegrationType": "AWS_PROXY",
+              "IntegrationUri": {
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"HelloLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+              },
+              "PayloadFormatVersion": "2.0",
+              "TimeoutInMillis": 6500
+            }
+          },
+          "HttpApiRouteGetQr": {
+            "Type": "AWS::ApiGatewayV2::Route",
+            "Properties": {
+              "ApiId": {
+                "Ref": "HttpApi"
+              },
+              "RouteKey": "GET /qr",
+              "Target": {
+                "Fn::Join": [
+                  "/",
+                  [
+                    "integrations",
+                    {
+                      "Ref": "HttpApiIntegrationHello"
+                    }
+                  ]
+                ]
+              }
+            },
+            "DependsOn": "HttpApiIntegrationHello"
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": {
+              "Ref": "ServerlessDeploymentBucket"
+            },
+            "Export": {
+              "Name": "sls-aws-lambda-qrcode-saju-dev-ServerlessDeploymentBucketName"
+            }
+          },
+          "HelloLambdaFunctionQualifiedArn": {
+            "Description": "Current Lambda function version",
+            "Value": {
+              "Ref": "HelloLambdaVersion9rPUDCJGZJWJD1iS5CJGCAvWHTrmjlgEn52MaKBjY"
+            },
+            "Export": {
+              "Name": "sls-aws-lambda-qrcode-saju-dev-HelloLambdaFunctionQualifiedArn"
+            }
+          },
+          "HttpApiId": {
+            "Description": "Id of the HTTP API",
+            "Value": {
+              "Ref": "HttpApi"
+            },
+            "Export": {
+              "Name": "sls-aws-lambda-qrcode-saju-dev-HttpApiId"
+            }
+          },
+          "HttpApiUrl": {
+            "Description": "URL of the HTTP API",
+            "Value": {
+              "Fn::Join": [
+                "",
+                [
+                  "https://",
+                  {
+                    "Ref": "HttpApi"
+                  },
+                  ".execute-api.",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ".",
+                  {
+                    "Ref": "AWS::URLSuffix"
+                  }
+                ]
+              ]
+            },
+            "Export": {
+              "Name": "sls-aws-lambda-qrcode-saju-dev-HttpApiUrl"
+            }
+          }
+        }
+      },
+      "coreCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "ServerlessDeploymentBucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+              "BucketEncryption": {
+                "ServerSideEncryptionConfiguration": [
+                  {
+                    "ServerSideEncryptionByDefault": {
+                      "SSEAlgorithm": "AES256"
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "ServerlessDeploymentBucketPolicy": {
+            "Type": "AWS::S3::BucketPolicy",
+            "Properties": {
+              "Bucket": {
+                "Ref": "ServerlessDeploymentBucket"
+              },
+              "PolicyDocument": {
+                "Statement": [
+                  {
+                    "Action": "s3:*",
+                    "Effect": "Deny",
+                    "Principal": "*",
+                    "Resource": [
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":s3:::",
+                            {
+                              "Ref": "ServerlessDeploymentBucket"
+                            },
+                            "/*"
+                          ]
+                        ]
+                      },
+                      {
+                        "Fn::Join": [
+                          "",
+                          [
+                            "arn:",
+                            {
+                              "Ref": "AWS::Partition"
+                            },
+                            ":s3:::",
+                            {
+                              "Ref": "ServerlessDeploymentBucket"
+                            }
+                          ]
+                        ]
+                      }
+                    ],
+                    "Condition": {
+                      "Bool": {
+                        "aws:SecureTransport": false
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": {
+              "Ref": "ServerlessDeploymentBucket"
+            }
+          }
+        }
+      },
+      "vpc": {}
+    },
+    "pluginsData": {},
+    "functions": {
+      "hello": {
+        "handler": "handler.hello",
+        "events": [
+          {
+            "httpApi": {
+              "path": "/qr",
+              "method": "get"
+            },
+            "resolvedMethod": "GET",
+            "resolvedPath": "/qr"
+          }
+        ],
+        "name": "aws-lambda-qrcode-saju-dev-hello",
+        "package": {},
+        "memory": 1024,
+        "timeout": 6,
+        "runtime": "nodejs12.x",
+        "vpc": {},
+        "versionLogicalId": "HelloLambdaVersion9rPUDCJGZJWJD1iS5CJGCAvWHTrmjlgEn52MaKBjY"
+      }
+    },
+    "configValidationMode": "warn",
+    "serviceFilename": "serverless.yml",
+    "initialServerlessConfig": {
+      "service": {
+        "$ref": "$[\"service\"][\"serviceObject\"]"
+      },
+      "frameworkVersion": "2",
+      "provider": {
+        "$ref": "$[\"service\"][\"provider\"]"
+      },
+      "functions": {
+        "$ref": "$[\"service\"][\"functions\"]"
+      }
+    },
+    "layers": {},
+    "isDashboardMonitoringPreconfigured": false,
+    "artifact": "G:\\aws-lambda-qrcode_saju\\.serverless\\aws-lambda-qrcode-saju.zip"
+  },
+  "package": {
+    "artifactDirectoryName": "serverless/aws-lambda-qrcode-saju/dev/1642363514915-2022-01-16T20:05:14.915Z",
+    "artifact": "aws-lambda-qrcode-saju.zip"
+  }
+}
