@@ -1,10 +1,6 @@
 "use strict";
 const QRCode = require("qrcode");
 const { base64encode } = require("nodejs-base64");
-
-let stringdata = JSON.stringify(data);
-let encoded = base64encode(stringdata);
-
 module.exports.generate = (event) => {
   return new Promise((resolve, reject) => {
     const { total_amount, company, vat_number, tax_amount, date_time } =

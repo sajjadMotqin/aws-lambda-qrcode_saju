@@ -84,10 +84,10 @@
               }
             }
           },
-          "HelloLogGroup": {
+          "GenerateLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/baianat-invoice-qrcode-generator-dev-hello"
+              "LogGroupName": "/aws/lambda/baianat-invoice-qrcode-generator-dev-generate"
             }
           },
           "IamRoleLambdaExecution": {
@@ -167,18 +167,18 @@
               }
             }
           },
-          "HelloLambdaFunction": {
+          "GenerateLambdaFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
               "Code": {
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/baianat-invoice-qrcode-generator/dev/1642406751214-2022-01-17T08:05:51.214Z/baianat-invoice-qrcode-generator.zip"
+                "S3Key": "serverless/baianat-invoice-qrcode-generator/dev/1642407865934-2022-01-17T08:24:25.934Z/baianat-invoice-qrcode-generator.zip"
               },
               "Handler": "handler.generate",
               "Runtime": "nodejs12.x",
-              "FunctionName": "baianat-invoice-qrcode-generator-dev-hello",
+              "FunctionName": "baianat-invoice-qrcode-generator-dev-generate",
               "MemorySize": 1024,
               "Timeout": 6,
               "Role": {
@@ -189,17 +189,17 @@
               }
             },
             "DependsOn": [
-              "HelloLogGroup"
+              "GenerateLogGroup"
             ]
           },
-          "HelloLambdaVersiony5kwiKBcjIB0cEH6RNAAY5m3uiDTKKbClcxLdXuqtU": {
+          "GenerateLambdaVersionx6w4NnutIzxZpAI9ki7fPY5F7pWc7oygq7G57yoaA": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
-                "Ref": "HelloLambdaFunction"
+                "Ref": "GenerateLambdaFunction"
               },
-              "CodeSha256": "9KZ63Klt/Fcb/fv5HDrCXBavUGYTtlELrEPLixek2cw="
+              "CodeSha256": "UKnkEWCyYj8MJrtLEPU2ygnzLRbuG4EJqrS2f965dDs="
             }
           },
           "HttpApi": {
@@ -222,12 +222,12 @@
               }
             }
           },
-          "HelloLambdaPermissionHttpApi": {
+          "GenerateLambdaPermissionHttpApi": {
             "Type": "AWS::Lambda::Permission",
             "Properties": {
               "FunctionName": {
                 "Fn::GetAtt": [
-                  "HelloLambdaFunction",
+                  "GenerateLambdaFunction",
                   "Arn"
                 ]
               },
@@ -259,7 +259,7 @@
               }
             }
           },
-          "HttpApiIntegrationHello": {
+          "HttpApiIntegrationGenerate": {
             "Type": "AWS::ApiGatewayV2::Integration",
             "Properties": {
               "ApiId": {
@@ -267,7 +267,7 @@
               },
               "IntegrationType": "AWS_PROXY",
               "IntegrationUri": {
-                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"HelloLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
+                "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"GenerateLambdaPermissionHttpApi\"][\"Properties\"][\"FunctionName\"]"
               },
               "PayloadFormatVersion": "2.0",
               "TimeoutInMillis": 6500
@@ -286,13 +286,13 @@
                   [
                     "integrations",
                     {
-                      "Ref": "HttpApiIntegrationHello"
+                      "Ref": "HttpApiIntegrationGenerate"
                     }
                   ]
                 ]
               }
             },
-            "DependsOn": "HttpApiIntegrationHello"
+            "DependsOn": "HttpApiIntegrationGenerate"
           }
         },
         "Outputs": {
@@ -304,13 +304,13 @@
               "Name": "sls-baianat-invoice-qrcode-generator-dev-ServerlessDeploymentBucketName"
             }
           },
-          "HelloLambdaFunctionQualifiedArn": {
+          "GenerateLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HelloLambdaVersiony5kwiKBcjIB0cEH6RNAAY5m3uiDTKKbClcxLdXuqtU"
+              "Ref": "GenerateLambdaVersionx6w4NnutIzxZpAI9ki7fPY5F7pWc7oygq7G57yoaA"
             },
             "Export": {
-              "Name": "sls-baianat-invoice-qrcode-generator-dev-HelloLambdaFunctionQualifiedArn"
+              "Name": "sls-baianat-invoice-qrcode-generator-dev-GenerateLambdaFunctionQualifiedArn"
             }
           },
           "HttpApiId": {
@@ -435,7 +435,7 @@
     },
     "pluginsData": {},
     "functions": {
-      "hello": {
+      "generate": {
         "handler": "handler.generate",
         "events": [
           {
@@ -447,13 +447,13 @@
             "resolvedPath": "/qr"
           }
         ],
-        "name": "baianat-invoice-qrcode-generator-dev-hello",
+        "name": "baianat-invoice-qrcode-generator-dev-generate",
         "package": {},
         "memory": 1024,
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "HelloLambdaVersiony5kwiKBcjIB0cEH6RNAAY5m3uiDTKKbClcxLdXuqtU"
+        "versionLogicalId": "GenerateLambdaVersionx6w4NnutIzxZpAI9ki7fPY5F7pWc7oygq7G57yoaA"
       }
     },
     "configValidationMode": "warn",
@@ -475,7 +475,7 @@
     "artifact": "/Users/adel/node/test_qrcode_lambda/aws-lambda-qrcode_saju/.serverless/baianat-invoice-qrcode-generator.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/baianat-invoice-qrcode-generator/dev/1642406751214-2022-01-17T08:05:51.214Z",
+    "artifactDirectoryName": "serverless/baianat-invoice-qrcode-generator/dev/1642407865934-2022-01-17T08:24:25.934Z",
     "artifact": "baianat-invoice-qrcode-generator.zip"
   }
 }
