@@ -1,15 +1,15 @@
 {
   "service": {
-    "service": "aws-lambda-qrcode-saju",
+    "service": "baianat-invoice-qrcode-generator",
     "serviceObject": {
-      "name": "aws-lambda-qrcode-saju"
+      "name": "baianat-invoice-qrcode-generator"
     },
     "provider": {
       "name": "aws",
       "runtime": "nodejs12.x",
       "lambdaHashingVersion": "20201221",
+      "region": "eu-west-1",
       "stage": "dev",
-      "region": "us-east-1",
       "versionFunctions": true,
       "compiledCloudFormationTemplate": {
         "AWSTemplateFormatVersion": "2010-09-09",
@@ -87,7 +87,7 @@
           "HelloLogGroup": {
             "Type": "AWS::Logs::LogGroup",
             "Properties": {
-              "LogGroupName": "/aws/lambda/aws-lambda-qrcode-saju-dev-hello"
+              "LogGroupName": "/aws/lambda/baianat-invoice-qrcode-generator-dev-hello"
             }
           },
           "IamRoleLambdaExecution": {
@@ -115,7 +115,7 @@
                     "Fn::Join": [
                       "-",
                       [
-                        "aws-lambda-qrcode-saju",
+                        "baianat-invoice-qrcode-generator",
                         "dev",
                         "lambda"
                       ]
@@ -132,7 +132,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/aws-lambda-qrcode-saju-dev*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/baianat-invoice-qrcode-generator-dev*:*"
                           }
                         ]
                       },
@@ -143,7 +143,7 @@
                         ],
                         "Resource": [
                           {
-                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/aws-lambda-qrcode-saju-dev*:*:*"
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/baianat-invoice-qrcode-generator-dev*:*:*"
                           }
                         ]
                       }
@@ -156,7 +156,7 @@
                 "Fn::Join": [
                   "-",
                   [
-                    "aws-lambda-qrcode-saju",
+                    "baianat-invoice-qrcode-generator",
                     "dev",
                     {
                       "Ref": "AWS::Region"
@@ -174,11 +174,11 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/aws-lambda-qrcode-saju/dev/1642404637373-2022-01-17T07:30:37.373Z/aws-lambda-qrcode-saju.zip"
+                "S3Key": "serverless/baianat-invoice-qrcode-generator/dev/1642406751214-2022-01-17T08:05:51.214Z/baianat-invoice-qrcode-generator.zip"
               },
-              "Handler": "handler.hello",
+              "Handler": "handler.generate",
               "Runtime": "nodejs12.x",
-              "FunctionName": "aws-lambda-qrcode-saju-dev-hello",
+              "FunctionName": "baianat-invoice-qrcode-generator-dev-hello",
               "MemorySize": 1024,
               "Timeout": 6,
               "Role": {
@@ -192,20 +192,20 @@
               "HelloLogGroup"
             ]
           },
-          "HelloLambdaVersion8ymkIW8ZkPr7Pb6lktsXcyR2FrWlUxy1JXcnHhlfI": {
+          "HelloLambdaVersiony5kwiKBcjIB0cEH6RNAAY5m3uiDTKKbClcxLdXuqtU": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HelloLambdaFunction"
               },
-              "CodeSha256": "QgUVYSsObUZ7/8PN1pESyDWgaJ5Img9JYk0lbnrtaN4="
+              "CodeSha256": "9KZ63Klt/Fcb/fv5HDrCXBavUGYTtlELrEPLixek2cw="
             }
           },
           "HttpApi": {
             "Type": "AWS::ApiGatewayV2::Api",
             "Properties": {
-              "Name": "dev-aws-lambda-qrcode-saju",
+              "Name": "dev-baianat-invoice-qrcode-generator",
               "ProtocolType": "HTTP"
             }
           },
@@ -301,16 +301,16 @@
               "Ref": "ServerlessDeploymentBucket"
             },
             "Export": {
-              "Name": "sls-aws-lambda-qrcode-saju-dev-ServerlessDeploymentBucketName"
+              "Name": "sls-baianat-invoice-qrcode-generator-dev-ServerlessDeploymentBucketName"
             }
           },
           "HelloLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HelloLambdaVersion8ymkIW8ZkPr7Pb6lktsXcyR2FrWlUxy1JXcnHhlfI"
+              "Ref": "HelloLambdaVersiony5kwiKBcjIB0cEH6RNAAY5m3uiDTKKbClcxLdXuqtU"
             },
             "Export": {
-              "Name": "sls-aws-lambda-qrcode-saju-dev-HelloLambdaFunctionQualifiedArn"
+              "Name": "sls-baianat-invoice-qrcode-generator-dev-HelloLambdaFunctionQualifiedArn"
             }
           },
           "HttpApiId": {
@@ -319,7 +319,7 @@
               "Ref": "HttpApi"
             },
             "Export": {
-              "Name": "sls-aws-lambda-qrcode-saju-dev-HttpApiId"
+              "Name": "sls-baianat-invoice-qrcode-generator-dev-HttpApiId"
             }
           },
           "HttpApiUrl": {
@@ -344,7 +344,7 @@
               ]
             },
             "Export": {
-              "Name": "sls-aws-lambda-qrcode-saju-dev-HttpApiUrl"
+              "Name": "sls-baianat-invoice-qrcode-generator-dev-HttpApiUrl"
             }
           }
         }
@@ -436,7 +436,7 @@
     "pluginsData": {},
     "functions": {
       "hello": {
-        "handler": "handler.hello",
+        "handler": "handler.generate",
         "events": [
           {
             "httpApi": {
@@ -447,13 +447,13 @@
             "resolvedPath": "/qr"
           }
         ],
-        "name": "aws-lambda-qrcode-saju-dev-hello",
+        "name": "baianat-invoice-qrcode-generator-dev-hello",
         "package": {},
         "memory": 1024,
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "HelloLambdaVersion8ymkIW8ZkPr7Pb6lktsXcyR2FrWlUxy1JXcnHhlfI"
+        "versionLogicalId": "HelloLambdaVersiony5kwiKBcjIB0cEH6RNAAY5m3uiDTKKbClcxLdXuqtU"
       }
     },
     "configValidationMode": "warn",
@@ -472,10 +472,10 @@
     },
     "layers": {},
     "isDashboardMonitoringPreconfigured": false,
-    "artifact": "/Users/adel/node/test_qrcode_lambda/aws-lambda-qrcode_saju/.serverless/aws-lambda-qrcode-saju.zip"
+    "artifact": "/Users/adel/node/test_qrcode_lambda/aws-lambda-qrcode_saju/.serverless/baianat-invoice-qrcode-generator.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/aws-lambda-qrcode-saju/dev/1642404637373-2022-01-17T07:30:37.373Z",
-    "artifact": "aws-lambda-qrcode-saju.zip"
+    "artifactDirectoryName": "serverless/baianat-invoice-qrcode-generator/dev/1642406751214-2022-01-17T08:05:51.214Z",
+    "artifact": "baianat-invoice-qrcode-generator.zip"
   }
 }
