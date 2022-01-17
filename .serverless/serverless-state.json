@@ -174,7 +174,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/aws-lambda-qrcode-saju/dev/1642363514915-2022-01-16T20:05:14.915Z/aws-lambda-qrcode-saju.zip"
+                "S3Key": "serverless/aws-lambda-qrcode-saju/dev/1642404637373-2022-01-17T07:30:37.373Z/aws-lambda-qrcode-saju.zip"
               },
               "Handler": "handler.hello",
               "Runtime": "nodejs12.x",
@@ -192,14 +192,14 @@
               "HelloLogGroup"
             ]
           },
-          "HelloLambdaVersion9rPUDCJGZJWJD1iS5CJGCAvWHTrmjlgEn52MaKBjY": {
+          "HelloLambdaVersion8ymkIW8ZkPr7Pb6lktsXcyR2FrWlUxy1JXcnHhlfI": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HelloLambdaFunction"
               },
-              "CodeSha256": "soDloRSj2zEtdw6N9+xWsGnHs8rKTH7MsaL4RJN24q4="
+              "CodeSha256": "QgUVYSsObUZ7/8PN1pESyDWgaJ5Img9JYk0lbnrtaN4="
             }
           },
           "HttpApi": {
@@ -307,7 +307,7 @@
           "HelloLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HelloLambdaVersion9rPUDCJGZJWJD1iS5CJGCAvWHTrmjlgEn52MaKBjY"
+              "Ref": "HelloLambdaVersion8ymkIW8ZkPr7Pb6lktsXcyR2FrWlUxy1JXcnHhlfI"
             },
             "Export": {
               "Name": "sls-aws-lambda-qrcode-saju-dev-HelloLambdaFunctionQualifiedArn"
@@ -453,7 +453,7 @@
         "timeout": 6,
         "runtime": "nodejs12.x",
         "vpc": {},
-        "versionLogicalId": "HelloLambdaVersion9rPUDCJGZJWJD1iS5CJGCAvWHTrmjlgEn52MaKBjY"
+        "versionLogicalId": "HelloLambdaVersion8ymkIW8ZkPr7Pb6lktsXcyR2FrWlUxy1JXcnHhlfI"
       }
     },
     "configValidationMode": "warn",
@@ -472,10 +472,10 @@
     },
     "layers": {},
     "isDashboardMonitoringPreconfigured": false,
-    "artifact": "G:\\aws-lambda-qrcode_saju\\.serverless\\aws-lambda-qrcode-saju.zip"
+    "artifact": "/Users/adel/node/test_qrcode_lambda/aws-lambda-qrcode_saju/.serverless/aws-lambda-qrcode-saju.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/aws-lambda-qrcode-saju/dev/1642363514915-2022-01-16T20:05:14.915Z",
+    "artifactDirectoryName": "serverless/aws-lambda-qrcode-saju/dev/1642404637373-2022-01-17T07:30:37.373Z",
     "artifact": "aws-lambda-qrcode-saju.zip"
   }
 }
