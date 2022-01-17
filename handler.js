@@ -7,16 +7,18 @@ let encoded = base64encode(stringdata);
 
 module.exports.generate = (event) => {
   return new Promise((resolve, reject) => {
-    const { name, total_amount, company, vat_number, tax_amount, date_time } =
+    const { total_amount, company, vat_number, tax_amount, date_time } =
       event.queryStringParameters;
-    const encoded =
-      company + vat_number + date_time + total_amount + tax_amount;
+    const encoded = base64encode(
+      company + vat_number + date_time + total_amount + tax_amount
+    );
+
     QRCode.toDataURL(encoded, function (err, code) {
       if (err) console.log("error", err);
       console.log(code);
       resolve({
         statusCode: 200,
-        body: JSON.stringify(encoded),
+        body: JSON.stringify(code),
       });
     });
   });
