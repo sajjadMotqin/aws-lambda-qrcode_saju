@@ -11,10 +11,15 @@ module.exports.generate = (event) => {
 
     QRCode.toDataURL(encoded, function (err, code) {
       if (err) console.log("error", err);
+      let result = code.replace(/data:image\/png;base64,/, '');
       console.log(code);
       resolve({
         statusCode: 200,
-        body: JSON.stringify(code),
+          headers: {
+            'Content-Type': 'image/jpeg'
+          },
+          body: result,
+          isBase64Encoded: true
       });
     });
   });
